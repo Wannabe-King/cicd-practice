@@ -1,29 +1,29 @@
-name: Deploy the frontend
+# name: Deploy the frontend
 
-on:
-  push:
-    branches: [main]
+# on:
+#   push:
+#     branches: [main]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout the code
+#         uses: actions/checkout@v2
 
-      - name: Docker login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+#       - name: Docker login
+#         uses: docker/login-action@v2
+#         with:
+#           username: ${{ secrets.DOCKER_USERNAME }}
+#           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Docker build push action
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./docker/Dockerfile.web
-          build-args: DATABASE_URL=${{ secrets.DATABASE_URL }}
-          push: true
-          tags: priyanshusidar/todo-app-web:${{ github.sha }}
+#       - name: Docker build push action
+#         uses: docker/build-push-action@v4
+#         with:
+#           context: .
+#           file: ./docker/Dockerfile.web
+#           build-args: DATABASE_URL=${{ secrets.DATABASE_URL }}
+#           push: true
+#           tags: priyanshusidar/todo-app-web:${{ github.sha }}
 
  

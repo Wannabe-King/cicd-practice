@@ -29,4 +29,4 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
           chmod 700 /home/runner/ssh_key
-          ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@13.233.246.163 -t "docker stop user_ws && docker run --name user_ws -d -p 8081:8081 priyanshusidar/todo-app-ws:${{ github.sha }}"
+          ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@13.233.246.163 -t "sudo docker stop user_ws && sudo docker rm user_ws && sudo docker run --name user_ws -d -p 8081:8081 priyanshusidar/todo-app-ws:${{ github.sha }}"
