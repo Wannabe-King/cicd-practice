@@ -1,32 +1,32 @@
-name: Deploy the backend
+# name: Deploy the backend
 
-on:
-  push:
-    branches: [main]
+# on:
+#   push:
+#     branches: [main]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout the code
+#         uses: actions/checkout@v2
 
-      - name: Docker login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+#       - name: Docker login
+#         uses: docker/login-action@v2
+#         with:
+#           username: ${{ secrets.DOCKER_USERNAME }}
+#           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Docker build push action
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./docker/Dockerfile.http-server
-          push: true
-          tags: priyanshusidar/todo-app-backend:${{ github.sha }}
+#       - name: Docker build push action
+#         uses: docker/build-push-action@v4
+#         with:
+#           context: .
+#           file: ./docker/Dockerfile.http-server
+#           push: true
+#           tags: priyanshusidar/todo-app-backend:${{ github.sha }}
 
-      - name: Deploy to VM
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
-          chmod 700 /home/runner/ssh_key
-          ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@3.111.39.165 -t "sudo docker stop user_backend && sudo docker rm user_backend &&  sudo docker run --name user_backend -d -p 8080:8080 priyanshusidar/todo-app-backend:${{ github.sha }}"
+#       - name: Deploy to VM
+#         run: |
+#           echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
+#           chmod 700 /home/runner/ssh_key
+#           ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@3.111.39.165 -t "sudo docker stop user_backend && sudo docker rm user_backend &&  sudo docker run --name user_backend -d -p 8080:8080 priyanshusidar/todo-app-backend:${{ github.sha }}"
